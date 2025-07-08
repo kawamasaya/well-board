@@ -1,7 +1,7 @@
+import type { HttpClientMethods } from '@/types'
 import axios, { AxiosInstance } from 'axios'
 import auth from './auth'
 import tenant from './tenant'
-import type { HttpClientMethods } from '@/types'
 
 // Create typed HTTP client that extends AxiosInstance with custom methods
 interface TypedHttpClient extends AxiosInstance, HttpClientMethods { }
@@ -9,6 +9,7 @@ interface TypedHttpClient extends AxiosInstance, HttpClientMethods { }
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT,
   withCredentials: true,
+  adapter: 'fetch'
 }) as TypedHttpClient
 
 // Add authentication methods
