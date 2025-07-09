@@ -116,8 +116,12 @@ class UserViewSet(ModelViewSet):
             - ADMIN作成: ADMIN権限以上が必要
             - SUPERUSER作成: 不可（システムレベルで制限）
         """
+
+        if user.role == UserRole.USER.value:
+            return False, "一般ユーザーはユーザーを作成する権限がありません。"
+
         # 管理者以外は管理者ロールでユーザー作成不可
-        if int(role) == UserRole.ADMIN.value and user.role < UserRole.ADMIN.value:
+        if int(role) == UserRole.ADMIN.value and user.role > UserRole.ADMIN.value:
             return False, "管理者権限が必要です。"
         
         # SUPERUSERロールはSUPERUSERのみ設定可能
